@@ -78,6 +78,10 @@ title: Home
       <span class="stat-value">4</span>
       <span class="stat-label">Exemption classes</span>
     </div>
+    <div class="stat">
+      <span class="stat-value">13M</span>
+      <span class="stat-label">Words in corpus</span>
+    </div>
   </div>
 </div>
 
