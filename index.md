@@ -10,9 +10,7 @@ title: Home
 
 <div class="viz-block">
   <a class="viz-link" href="{{ '/assets/img/visualization.png' | relative_url }}" target="_blank">
-    <div class="viz-placeholder">
-      <span class="viz-placeholder-label">Visualization &mdash; click to view full size</span>
-    </div>
+    <img src="{{ '/assets/img/visualization-preview.png' | relative_url }}" alt="The 1201 Corpus Tree — petitions, oppositions, and reply comments filed 2000–2024, organized by exemption class">
   </a>
   <p class="viz-caption">The 1201 Corpus Tree &mdash; petitions, oppositions, and reply comments filed 2000&ndash;2024, organized by exemption class. <a href="{{ '/assets/img/visualization.png' | relative_url }}" target="_blank">View at full dimensions &rarr;</a></p>
 </div>
