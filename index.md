@@ -5,7 +5,11 @@ title: Home
 <div class="hero">
   <p class="hero-eyebrow">17 U.S.C. § 1201(a)(1) &mdash; DMCA Section 1201 Rulemaking</p>
   <h1>Burden<br>of Proof</h1>
-  <p class="hero-desc">A text analysis and visualization of the public record from six triennial rulemaking proceedings, tracing how stakeholders have argued for and against exemptions to the anti-circumvention provisions of the Digital Millennium Copyright Act.</p>
+  <div class="hero-desc">
+    <p>Every three years, scores of nonprofit organizations, law school clinics, trade associations, academics, companies, and individuals file petitions and comments to the U.S. Copyright Office. Their filings are concerned with one law: 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1), a law which aims to prevent the unauthorized copying of digital works. For months, they request&mdash;and oppose&mdash;limited exemptions to the law. The requests seek permission to break digital locks in order to do things already allowed by copyright law, like repair a tractor, or show short clips of a film in a media studies class, or access data captured by medical devices implanted in their bodies. The opposition insists that granting such permission would undermine entire industries.</p>
+    <p>Since this ritual began in 2000, the participants in this Triennial Review have spent countless hours generating more than 55,000 pages of petitions, comments, opposition comments, and reply comments. This corpus represents a debate over the contours of the 1201 statute&mdash;a statute almost never used by those whose rights it is nominally designed to protect. Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
+    <p>This project captures the effort of this process, mapping the documents written and filed by all of the parties involved. This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system.</p>
+  </div>
 </div>
 
 <div class="viz-block">

@@ -119,10 +119,18 @@ a:hover { color: var(--cp); }
 }
 
 .hero-desc {
-  max-width: 560px;
+  max-width: 640px;
   font-size: 13px;
   line-height: 1.8;
   color: var(--muted);
+}
+
+.hero-desc p {
+  margin-bottom: 14px;
+}
+
+.hero-desc p:last-child {
+  margin-bottom: 0;
 }
 
 /* === Visualization block === */
