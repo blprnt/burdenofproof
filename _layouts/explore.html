@@ -21,22 +21,28 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       background: var(--bg);
+      font-family: var(--mono);
+      display: flex;
+      flex-direction: column;
       overflow-x: auto;
       overflow-y: auto;
-      font-family: var(--mono);
     }
 
     canvas {
       display: block;
-      margin-top: 44px;
     }
 
     #controls {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: sticky;
+      top: 0;
       z-index: 10;
+      flex-shrink: 0;
       background: var(--bg);
       padding: 8px 16px;
       display: flex;
@@ -44,6 +50,11 @@
       align-items: center;
       flex-wrap: wrap;
       border-bottom: 1px solid var(--rule);
+    }
+
+    #canvas-container {
+      flex: 1;
+      overflow: auto;
     }
 
     .site-back {
@@ -148,6 +159,7 @@
     <span id="stats"></span>
     <button onclick="savePlot()">Save PNG</button>
   </div>
+  <div id="canvas-container"></div>
   <div id="legend"></div>
 </body>
 </html>

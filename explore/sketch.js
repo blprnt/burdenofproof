@@ -310,7 +310,9 @@ const DEFAULT_DOT_COLOR = '#999999';
 let ciToColor = {};
 
 function setup() {
-  createCanvas(100, 100);
+  let container = document.getElementById('canvas-container');
+  let cnv = createCanvas(100, 100);
+  if (container) cnv.parent(container);
   pixelDensity(1);
   const _seedParam = new URLSearchParams(window.location.search).get('seed');
   noiseSeed(_seedParam !== null ? parseInt(_seedParam) : 1201);
