@@ -115,9 +115,9 @@ title: Home
   <p class="section-intro">The Burden of Proof visualization is available as an archival-quality poster print in three sizes. Each print ships rolled in a protective tube.</p>
   <div class="print-grid">
     <div class="print-card">
-      <div class="print-size">18 &times; 36"</div>
+      <div class="print-size">16 &times; 32"</div>
       <div class="print-desc">Standard poster size. Suitable for framing.</div>
-      <a class="print-btn" href="#" target="_blank">Order 18 &times; 36" &rarr;</a>
+      <a class="print-btn" href="#" target="_blank">Order 16 &times; 32" &rarr;</a>
     </div>
     <div class="print-card">
       <div class="print-size">20 &times; 40"</div>
