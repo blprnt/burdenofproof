@@ -1,5 +1,6 @@
 title: Burden of Proof
-description: Text analysis and visualization of the DMCA Section 1201 exemption rulemaking corpus
+description: A text analysis and visualization of nine triennial rulemaking proceedings under DMCA Section 1201 — mapping more than 55,000 pages of petitions and comments filed since 2000.
+og_title: "Burden of Proof — DMCA Section 1201 Corpus Analysis"
 baseurl: "/burdenofproof"
 url: "https://blprnt.github.io"
 
