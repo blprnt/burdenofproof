@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script src="{{ '/explore/sketch.js' | relative_url }}?v=115"></script>
+  <style>
+    :root {
+      --bg:     #F4F0E2;
+      --ink:    #2a2520;
+      --muted:  #6e6860;
+      --rule:   rgba(80, 52, 20, 0.20);
+      --cp:     #4A1E6E;
+      --mono:   'Courier New', Courier, monospace;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      overflow-x: auto;
+      overflow-y: auto;
+      font-family: var(--mono);
+    }
+
+    canvas {
+      display: block;
+      margin-top: 44px;
+    }
+
+    #controls {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      background: var(--bg);
+      padding: 8px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .site-back {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      padding-right: 16px;
+      border-right: 1px solid var(--rule);
+      margin-right: 8px;
+    }
+
+    .site-back:hover { color: var(--ink); }
+
+    select {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: 4px 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 0;
+      min-width: 200px;
+      max-width: 300px;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    select:focus { outline: none; border-color: var(--ink); }
+
+    #stats {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    button {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--ink); }
+
+    #legend {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 10;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .legend-swatch {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <a class="site-back" href="{{ '/' | relative_url }}">Burden of Proof</a>
+    <select id="class-select"><option value="-1">Loading...</option></select>
+    <select id="role-select"><option value="">Loading...</option></select>
+    <select id="person-select"><option value="">Loading...</option></select>
+    <select id="org-select"><option value="">Loading...</option></select>
+    <select id="topic-select"><option value="">Loading...</option></select>
+    <span id="stats"></span>
+    <button onclick="savePlot()">Save PNG</button>
+  </div>
+  <div id="legend"></div>
+</body>
+</html>

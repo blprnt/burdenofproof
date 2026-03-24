@@ -247,6 +247,11 @@ a:hover { color: var(--cp); }
   margin-bottom: 10px;
 }
 
+.content-block p.callout {
+  color: var(--aw);
+  font-weight: bold;
+}
+
 /* === Stat strip === */
 .stat-strip {
   display: flex;

@@ -1,0 +1,72 @@
+[
+  {
+    "sc": "Audiovisual Works",
+    "ss": "Commentary & Noncommercial"
+  },
+  {
+    "sc": "Audiovisual Works",
+    "ss": "Educational"
+  },
+  {
+    "sc": "Audiovisual Works",
+    "ss": "Accessibility"
+  },
+  {
+    "sc": "Audiovisual Works",
+    "ss": "Shifting"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Unlocking"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Jailbreaking"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Diagnosis, maintenance, repair, and interoperability"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Preservation"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Security Research"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Shifting"
+  },
+  {
+    "sc": "All",
+    "ss": "Uses not prohibited by copyright law"
+  },
+  {
+    "sc": "Literary Works",
+    "ss": "Shifting"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Data Access"
+  },
+  {
+    "sc": "Literary Works",
+    "ss": "Accessibility"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Jailbreaking",
+    "ss2": "All-purpose mobile computing devices"
+  },
+  {
+    "sc": "Computer Programs",
+    "ss": "Jailbreaking",
+    "ss2": "Wireless telephone handsets"
+  },
+  {
+    "sc": "Literary Works",
+    "ss": "Data Access"
+  }
+]

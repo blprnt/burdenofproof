@@ -47,12 +47,12 @@ title: Home
     <div class="content-block">
       <h3>The Visualization</h3>
       <p>The 1201 Corpus Tree arranges filings as branches on a bilateral axis: proponents above, opponents below. Each branch represents a filing; its position along the vertical axis reflects the relative size of the case being made. Branches are colored by the exemption class they address and organized chronologically left to right across six triennial rounds.</p>
-      <p>This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system.</p>
+      <p>This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system. <a href="{{ '/explore/' | relative_url }}">Explore the interactive version &rarr;</a></p>
     </div>
     <div class="content-block">
       <h3>The Stakes</h3>
       <p>Since this ritual began in 2000, participants in the Triennial Review have generated more than 55,000 pages of petitions, comments, opposition comments, and reply comments. This corpus represents a debate over the contours of a statute almost never used by those whose rights it is nominally designed to protect.</p>
-      <p>Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
+      <p class="callout">Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
     </div>
     <div class="content-block">
       <h3>The Data</h3>
