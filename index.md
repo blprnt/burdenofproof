@@ -93,7 +93,7 @@ title: Home
       <h3 class="author-name">Jer Thorp</h3>
       <div class="artist-text">
         <p>Jer Thorp is an artist, writer, and researcher working at the intersection of data, culture, and design. His work uses computation to find patterns in large datasets and render them in ways that illuminate human experience.</p>
-        <p>He is the co-founder of the Office for Creative Research, has served as the Data Artist in Residence at <em>The New York Times</em>, and is currently a fellow at Harvard's metaLAB. His work has been exhibited internationally and is held in public and private collections.</p>
+        <p>He is the co-founder of the Office for Creative Research and has served as the Data Artist in Residence at <em>The New York Times</em>. His work has been exhibited internationally and is held in public and private collections.</p>
         <p><a href="https://jerthorp.com" target="_blank">jerthorp.com &rarr;</a></p>
       </div>
     </div>
