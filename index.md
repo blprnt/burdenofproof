@@ -5,7 +5,7 @@ title: Home
 <div class="hero">
   <p class="hero-eyebrow"><a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C. § 1201(a)(1)</a> &mdash; DMCA Section 1201 Rulemaking</p>
   <h1>Burden<br>of Proof</h1>
-  <p class="hero-desc">A text analysis and visualization of the public record from six triennial rulemaking proceedings under <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a> &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
+  <p class="hero-desc">A text analysis and visualization of the public record from nine triennial rulemaking proceedings under <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a> &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
 </div>
 
 <div class="viz-block">
@@ -46,7 +46,7 @@ title: Home
     </div>
     <div class="content-block">
       <h3>The Visualization</h3>
-      <p>The 1201 Corpus Tree arranges filings as branches on a bilateral axis: proponents above, opponents below. Each branch represents a filing; its position along the vertical axis reflects the relative size of the case being made. Branches are colored by the exemption class they address and organized chronologically left to right across six triennial rounds.</p>
+      <p>The 1201 Corpus Tree arranges filings as branches on a bilateral axis: proponents above, opponents below. Each branch represents a filing; its position along the vertical axis reflects the relative size of the case being made. Branches are colored by the exemption class they address and organized chronologically left to right across nine triennial rounds.</p>
       <p>This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system. <a href="{{ '/explore/' | relative_url }}">Explore the interactive version &rarr;</a></p>
     </div>
     <div class="content-block">
@@ -62,7 +62,7 @@ title: Home
 
   <div class="stat-strip">
     <div class="stat">
-      <span class="stat-value">6</span>
+      <span class="stat-value">9</span>
       <span class="stat-label">Rulemaking rounds</span>
     </div>
     <div class="stat">
