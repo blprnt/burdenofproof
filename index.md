@@ -52,7 +52,7 @@ title: Home
     <div class="content-block">
       <h3>The Stakes</h3>
       <p>Since this ritual began in 2000, participants in the Triennial Review have generated more than 55,000 pages of petitions, comments, opposition comments, and reply comments. This corpus represents a debate over the contours of a statute almost never used by those whose rights it is nominally designed to protect.</p>
-      <p class="callout">Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
+      <p style="color: #980830; font-weight: bold;">Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
     </div>
     <div class="content-block">
       <h3>The Data</h3>
