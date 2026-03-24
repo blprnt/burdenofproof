@@ -1,7 +1,7 @@
 title: Burden of Proof
 description: Text analysis and visualization of the DMCA Section 1201 exemption rulemaking corpus
 baseurl: "/burdenofproof"
-url: "https://blprnt.github.io/burdenofproof"
+url: "https://blprnt.github.io"
 
 markdown: kramdown
 highlighter: rouge
