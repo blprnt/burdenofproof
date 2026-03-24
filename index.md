@@ -5,11 +5,7 @@ title: Home
 <div class="hero">
   <p class="hero-eyebrow">17 U.S.C. § 1201(a)(1) &mdash; DMCA Section 1201 Rulemaking</p>
   <h1>Burden<br>of Proof</h1>
-  <div class="hero-desc">
-    <p>Every three years, scores of nonprofit organizations, law school clinics, trade associations, academics, companies, and individuals file petitions and comments to the U.S. Copyright Office. Their filings are concerned with one law: 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1), a law which aims to prevent the unauthorized copying of digital works. For months, they request&mdash;and oppose&mdash;limited exemptions to the law. The requests seek permission to break digital locks in order to do things already allowed by copyright law, like repair a tractor, or show short clips of a film in a media studies class, or access data captured by medical devices implanted in their bodies. The opposition insists that granting such permission would undermine entire industries.</p>
-    <p>Since this ritual began in 2000, the participants in this Triennial Review have spent countless hours generating more than 55,000 pages of petitions, comments, opposition comments, and reply comments. This corpus represents a debate over the contours of the 1201 statute&mdash;a statute almost never used by those whose rights it is nominally designed to protect. Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
-    <p>This project captures the effort of this process, mapping the documents written and filed by all of the parties involved. This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system.</p>
-  </div>
+  <p class="hero-desc">A text analysis and visualization of the public record from six triennial rulemaking proceedings under 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1) &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
 </div>
 
 <div class="viz-block">
@@ -45,21 +41,22 @@ title: Home
   <div class="content-grid">
     <div class="content-block">
       <h3>The Corpus</h3>
-      <p>Every three years, the Copyright Office opens a public comment period during which any member of the public may petition for an exemption to Section 1201's prohibition on circumventing technological protection measures that control access to copyrighted works.</p>
-      <p>This project collects and analyzes the full text of petitions, oppositions, and reply comments filed across all six triennial proceedings, from the inaugural round in 2000 through 2024 — thousands of documents from hundreds of organizations.</p>
+      <p>Every three years, scores of nonprofit organizations, law school clinics, trade associations, academics, companies, and individuals file petitions and comments to the U.S. Copyright Office. Their filings are concerned with one law: 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1), a prohibition on circumventing technological protection measures that control access to copyrighted works.</p>
+      <p>For months, they request&mdash;and oppose&mdash;limited exemptions to the law. The requests seek permission to break digital locks in order to do things already allowed by copyright law, like repair a tractor, show short clips of a film in a media studies class, or access data captured by medical devices implanted in their bodies.</p>
     </div>
     <div class="content-block">
       <h3>The Visualization</h3>
       <p>The 1201 Corpus Tree arranges filings as branches on a bilateral axis: proponents above, opponents below. Each branch represents a filing; its position along the vertical axis reflects the relative size of the case being made. Branches are colored by the exemption class they address and organized chronologically left to right across six triennial rounds.</p>
-      <p>Together, the branches trace the shape of a legal argument that has grown and shifted over twenty-five years.</p>
+      <p>This visualization doesn&rsquo;t attempt to simplify this strange bureaucratic process; instead it reveals the full depth of the labor and the exhausting repetition of the system.</p>
     </div>
     <div class="content-block">
-      <h3>The Analysis</h3>
-      <p>Source documents were processed using NLP pipelines to extract named entities — organizations, individuals, and the exemption classes they address — making it possible to track which stakeholders appear across multiple proceedings and how the structure of the argument has evolved.</p>
+      <h3>The Stakes</h3>
+      <p>Since this ritual began in 2000, participants in the Triennial Review have generated more than 55,000 pages of petitions, comments, opposition comments, and reply comments. This corpus represents a debate over the contours of a statute almost never used by those whose rights it is nominally designed to protect.</p>
+      <p>Ultimately, the resources devoted to the bureaucratic process of exemption-granting almost certainly dwarf those devoted to enforcing the law itself.</p>
     </div>
     <div class="content-block">
       <h3>The Data</h3>
-      <p>All source material is drawn from the Copyright Office's public record. The corpus spans 2000&ndash;2024, covering the complete set of triennial proceedings conducted under Section 1201(a)(1). Exemption classes are organized according to the consolidated taxonomy developed across all six rulemakings.</p>
+      <p>Source documents were processed using NLP pipelines to extract named entities&mdash;organizations, individuals, and the exemption classes they address&mdash;making it possible to track which stakeholders appear across multiple proceedings and how the structure of the argument has evolved over twenty-five years.</p>
     </div>
   </div>
 
