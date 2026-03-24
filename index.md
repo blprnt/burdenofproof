@@ -3,9 +3,9 @@ title: Home
 ---
 
 <div class="hero">
-  <p class="hero-eyebrow">17 U.S.C. § 1201(a)(1) &mdash; DMCA Section 1201 Rulemaking</p>
+  <p class="hero-eyebrow"><a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C. § 1201(a)(1)</a> &mdash; DMCA Section 1201 Rulemaking</p>
   <h1>Burden<br>of Proof</h1>
-  <p class="hero-desc">A text analysis and visualization of the public record from six triennial rulemaking proceedings under 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1) &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
+  <p class="hero-desc">A text analysis and visualization of the public record from six triennial rulemaking proceedings under <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a> &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
 </div>
 
 <div class="viz-block">
@@ -41,7 +41,7 @@ title: Home
   <div class="content-grid">
     <div class="content-block">
       <h3>The Corpus</h3>
-      <p>Every three years, scores of nonprofit organizations, law school clinics, trade associations, academics, companies, and individuals file petitions and comments to the U.S. Copyright Office. Their filings are concerned with one law: 17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1), a prohibition on circumventing technological protection measures that control access to copyrighted works.</p>
+      <p>Every three years, scores of nonprofit organizations, law school clinics, trade associations, academics, companies, and individuals file petitions and comments to the U.S. Copyright Office. Their filings are concerned with one law: <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a>, a prohibition on circumventing technological protection measures that control access to copyrighted works.</p>
       <p>For months, they request&mdash;and oppose&mdash;limited exemptions to the law. The requests seek permission to break digital locks in order to do things already allowed by copyright law, like repair a tractor, show short clips of a film in a media studies class, or access data captured by medical devices implanted in their bodies.</p>
     </div>
     <div class="content-block">
