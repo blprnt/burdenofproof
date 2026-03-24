@@ -2,16 +2,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #F2F1EA;
+  --bg:       #F4F0E2;
   --polygon:  #ffffff;
-  --tint:     rgba(101, 67, 33, 0.07);
+  --tint:     rgba(80, 52, 20, 0.10);
   --ink:      #2a2520;
-  --muted:    #8c8780;
-  --rule:     rgba(101, 67, 33, 0.18);
-  --av:       #003f5c;
-  --cp:       #7a5195;
-  --lw:       #ffa600;
-  --aw:       #ef5675;
+  --muted:    #6e6860;
+  --rule:     rgba(80, 52, 20, 0.20);
+  --av:       #002D45;
+  --cp:       #4A1E6E;
+  --lw:       #D48000;
+  --aw:       #980830;
   --mono:     'Courier New', Courier, monospace;
   --display:  'Bebas Neue', sans-serif;
 }
