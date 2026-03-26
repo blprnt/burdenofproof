@@ -1641,9 +1641,7 @@ function setupInteractionListeners() {
 function fitToScreen() {
   let container = document.getElementById('canvas-container');
   let availW = container.clientWidth || window.innerWidth;
-  let availH = container.clientHeight || (window.innerHeight - 44);
-  zoomLevel = Math.round(Math.min(availW / canvasW, availH / canvasH) * 10) / 10;
-  zoomLevel = Math.max(0.1, Math.min(4, zoomLevel));
+  zoomLevel = Math.max(0.1, Math.min(4, availW / canvasW));
   applyZoom();
 }
 
