@@ -117,22 +117,28 @@ title: Home
   <div class="print-mockup">
     <img src="{{ '/assets/img/mock-poster.png' | relative_url }}" alt="Burden of Proof poster print mockup">
   </div>
-  <div class="print-grid">
-    <div class="print-card">
-      <div class="print-size">16 &times; 32"</div>
-      <div class="print-desc">Standard poster size. Suitable for framing.</div>
-      <a class="print-btn" href="#" target="_blank">Order 16 &times; 32" &rarr;</a>
+  <div class="print-sizes">
+    <div class="print-size-item">
+      <div class="print-rect-stage">
+        <div class="print-rect" style="width:53px;height:106px;"></div>
+      </div>
+      <div class="print-size-num">16 &times; 32"</div>
+      <div class="print-size-desc">Standard poster size. Suitable for framing.</div>
     </div>
-    <div class="print-card">
-      <div class="print-size">20 &times; 40"</div>
-      <div class="print-desc">Mid-size. Good balance of detail and presence.</div>
-      <a class="print-btn" href="#" target="_blank">Order 20 &times; 40" &rarr;</a>
+    <div class="print-size-item">
+      <div class="print-rect-stage">
+        <div class="print-rect" style="width:67px;height:134px;"></div>
+      </div>
+      <div class="print-size-num">20 &times; 40"</div>
+      <div class="print-size-desc">Mid-size. Good balance of detail and presence.</div>
     </div>
-    <div class="print-card featured">
-      <div class="print-badge">Recommended</div>
-      <div class="print-size">30 &times; 60"</div>
-      <div class="print-desc">Large-format. Full resolution at print scale — every branch and annotation visible.</div>
-      <a class="print-btn" href="#" target="_blank">Order 30 &times; 60" &rarr;</a>
+    <div class="print-size-item">
+      <div class="print-rect-stage">
+        <div class="print-rect featured" style="width:100px;height:200px;"></div>
+      </div>
+      <div class="print-size-num">30 &times; 60"</div>
+      <div class="print-size-desc">Large-format. Full resolution at print scale &mdash; every branch and annotation visible.</div>
     </div>
   </div>
+  <a class="print-btn-single" href="https://www.jerthorp.me/product-page/burden-of-proof-poster" target="_blank">Order a Print &rarr;</a>
 </div>

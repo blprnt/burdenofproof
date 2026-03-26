@@ -355,7 +355,7 @@ a:hover { color: var(--cp); }
 /* === Print mockup === */
 .print-mockup {
   margin-bottom: 40px;
-  max-width: 360px;
+  max-width: 240px;
 }
 
 .print-mockup img {
@@ -365,76 +365,63 @@ a:hover { color: var(--cp); }
   border: 1px solid var(--rule);
 }
 
-/* === Print grid === */
-.print-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+/* === Print sizes === */
+.print-sizes {
+  display: flex;
+  gap: 48px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 720px) {
-  .print-grid { grid-template-columns: 1fr; }
-}
-
-.print-card {
-  border: 1px solid var(--rule);
-  padding: 28px 24px;
+.print-size-item {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: var(--polygon);
-  position: relative;
 }
 
-.print-card.featured {
+.print-rect-stage {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.print-rect {
+  background: var(--polygon);
+  border: 1px solid var(--ink);
+}
+
+.print-rect.featured {
   border-color: var(--cp);
 }
 
-.print-badge {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  background: var(--cp);
-  color: #fff;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 3px 8px;
-}
-
-.print-size {
+.print-size-num {
   font-family: var(--display);
-  font-size: 36px;
+  font-size: 22px;
   letter-spacing: 0.02em;
   line-height: 1;
 }
 
-.print-desc {
+.print-size-desc {
   font-size: 11px;
   color: var(--muted);
   line-height: 1.7;
-  flex: 1;
+  max-width: 140px;
 }
 
-.print-btn {
+.print-btn-single {
   display: inline-block;
-  margin-top: 8px;
-  font-size: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-decoration: none;
   color: var(--ink);
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 1px;
-  align-self: flex-start;
+  border: 1px solid var(--ink);
+  padding: 8px 16px;
 }
 
-.print-card.featured .print-btn {
-  color: var(--cp);
-  border-color: var(--cp);
-}
-
-.print-btn:hover {
-  color: var(--cp);
-  border-color: var(--cp);
+.print-btn-single:hover {
+  background: var(--ink);
+  color: var(--bg);
 }
