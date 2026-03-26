@@ -2385,7 +2385,7 @@ function draw() {
   // --- Info panel (canvas-drawn, included in PNG) ---
   if (activeResult) {
     let ink    = activeColorway.classes[CLASS_ORDER[0]] || '#000000';
-    let valFs  = Math.round(titleFontSize * 0.60);
+    let valFs  = Math.round(titleFontSize * 0.60 * 1.30);
     let lblFs  = Math.round(valFs * 0.42);
     let valCapH = Math.round(valFs * 0.72);
     let pairGap = Math.round(valFs * 0.25);
@@ -2415,15 +2415,15 @@ function draw() {
     titleCtx.textBaseline = 'top';
 
     for (let { label, val } of pairs) {
-      // Key name: Bebas Neue small, dark
+      // Key name: Bebas Neue small, light
       titleCtx.font      = `${lblFs}px "Bebas Neue", Georgia, serif`;
-      titleCtx.fillStyle = hexToRGBA(ink, 0.55);
+      titleCtx.fillStyle = hexToRGBA(ink, 0.30);
       titleCtx.fillText(label.toUpperCase(), titleRightX, panelY);
       panelY += Math.round(lblFs * 0.88);
 
-      // Value: Bebas Neue large, lighter
+      // Value: Bebas Neue large, dark
       titleCtx.font      = `${valFs}px "Bebas Neue", Georgia, serif`;
-      titleCtx.fillStyle = hexToRGBA(ink, 0.30);
+      titleCtx.fillStyle = hexToRGBA(ink, 0.85);
       titleCtx.fillText(val, titleRightX, panelY);
       panelY += valCapH + pairGap;
     }
