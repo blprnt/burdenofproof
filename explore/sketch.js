@@ -527,6 +527,7 @@ async function loadAllData() {
 
   loaded = true;
   resizeCanvas(Math.round(canvasW * zoomLevel), Math.round(canvasH * zoomLevel));
+  applyURLParams();
   redraw();
 }
 
@@ -1281,6 +1282,7 @@ function buildClassDropdown() {
     }
     rebuildDependentDropdowns();
     refreshActiveResult();
+    updateURL();
     redraw();
   });
 }
@@ -1314,6 +1316,7 @@ function buildRoleDropdown() {
     selectedRole = sel.value || null;
     rebuildDependentDropdowns();
     refreshActiveResult();
+    updateURL();
     redraw();
   });
 }
@@ -1347,7 +1350,7 @@ function buildPersonDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedPerson = sel.value || null; refreshActiveResult(); redraw(); });
+    sel.addEventListener('change', () => { selectedPerson = sel.value || null; refreshActiveResult(); updateURL(); redraw(); });
   }
 }
 
@@ -1380,7 +1383,7 @@ function buildOrgDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedOrg = sel.value || null; refreshActiveResult(); redraw(); });
+    sel.addEventListener('change', () => { selectedOrg = sel.value || null; refreshActiveResult(); updateURL(); redraw(); });
   }
 }
 
@@ -1413,7 +1416,7 @@ function buildTopicDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedTopic = sel.value || null; refreshActiveResult(); redraw(); });
+    sel.addEventListener('change', () => { selectedTopic = sel.value || null; refreshActiveResult(); updateURL(); redraw(); });
   }
 }
 
@@ -1473,6 +1476,73 @@ function computeActiveBranchKeys() {
 
 function refreshActiveResult() {
   activeResult = computeActiveBranchKeys();
+}
+
+function updateURL() {
+  let params = new URLSearchParams();
+  // Preserve seed param if present
+  let existing = new URLSearchParams(window.location.search);
+  if (existing.get('seed')) params.set('seed', existing.get('seed'));
+
+  let classSel = document.getElementById('class-select');
+  if (classSel && classSel.value !== '-1') params.set('class', classSel.value);
+  if (selectedRole)   params.set('role',   selectedRole);
+  if (selectedPerson) params.set('person', selectedPerson);
+  if (selectedOrg)    params.set('org',    selectedOrg);
+  if (selectedTopic)  params.set('topic',  selectedTopic);
+
+  let qs = params.toString();
+  window.history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
+}
+
+function applyURLParams() {
+  let params = new URLSearchParams(window.location.search);
+  if (!params.toString()) return;
+
+  let classVal = params.get('class');
+  if (classVal) {
+    let sel = document.getElementById('class-select');
+    if (sel) {
+      sel.value = classVal;
+      if (classVal.startsWith('sc:')) {
+        let scName = classVal.substring(3);
+        selectedCIs = new Set();
+        for (let i = 0; i < classData.length; i++) {
+          if (classData[i].sc === scName) selectedCIs.add(i);
+        }
+      } else {
+        selectedCIs = new Set([parseInt(classVal)]);
+      }
+      rebuildDependentDropdowns();
+    }
+  }
+
+  let roleVal = params.get('role');
+  if (roleVal) {
+    let sel = document.getElementById('role-select');
+    if (sel) { sel.value = roleVal; selectedRole = roleVal; }
+  }
+
+  let personVal = params.get('person');
+  if (personVal) {
+    let sel = document.getElementById('person-select');
+    if (sel) { sel.value = personVal; selectedPerson = personVal; }
+  }
+
+  let orgVal = params.get('org');
+  if (orgVal) {
+    let sel = document.getElementById('org-select');
+    if (sel) { sel.value = orgVal; selectedOrg = orgVal; }
+  }
+
+  let topicVal = params.get('topic');
+  if (topicVal) {
+    let sel = document.getElementById('topic-select');
+    if (sel) { sel.value = topicVal; selectedTopic = topicVal; }
+  }
+
+  refreshActiveResult();
+  redraw();
 }
 
 function buildZoomControls() {
