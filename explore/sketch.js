@@ -1276,6 +1276,7 @@ function buildClassDropdown() {
     } else {
       selectedCIs = new Set([parseInt(val)]);
     }
+    rebuildDependentDropdowns();
     redraw();
   });
 }
@@ -1307,19 +1308,20 @@ function buildRoleDropdown() {
 
   sel.addEventListener('change', () => {
     selectedRole = sel.value || null;
+    rebuildDependentDropdowns();
     redraw();
   });
 }
 
-function buildPersonDropdown() {
+function buildPersonDropdown(recs) {
+  recs = recs || occurrences;
   let sel = document.getElementById('person-select');
+  let prev = sel.value;
   sel.innerHTML = '';
 
   let counts = {};
-  for (let rec of occurrences) {
-    if (rec.t && rec.t === 'person') {
-      counts[rec.e] = (counts[rec.e] || 0) + 1;
-    }
+  for (let rec of recs) {
+    if (rec.t === 'person') counts[rec.e] = (counts[rec.e] || 0) + 1;
   }
 
   let noneOpt = document.createElement('option');
@@ -1335,21 +1337,24 @@ function buildPersonDropdown() {
     sel.appendChild(opt);
   }
 
-  sel.addEventListener('change', () => {
-    selectedPerson = sel.value || null;
-    redraw();
-  });
+  sel.value = (counts[prev] !== undefined) ? prev : '';
+  selectedPerson = sel.value || null;
+
+  if (!sel._hasListener) {
+    sel._hasListener = true;
+    sel.addEventListener('change', () => { selectedPerson = sel.value || null; redraw(); });
+  }
 }
 
-function buildOrgDropdown() {
+function buildOrgDropdown(recs) {
+  recs = recs || occurrences;
   let sel = document.getElementById('org-select');
+  let prev = sel.value;
   sel.innerHTML = '';
 
   let counts = {};
-  for (let rec of occurrences) {
-    if (rec.t && rec.t === 'org') {
-      counts[rec.e] = (counts[rec.e] || 0) + 1;
-    }
+  for (let rec of recs) {
+    if (rec.t === 'org') counts[rec.e] = (counts[rec.e] || 0) + 1;
   }
 
   let noneOpt = document.createElement('option');
@@ -1365,21 +1370,24 @@ function buildOrgDropdown() {
     sel.appendChild(opt);
   }
 
-  sel.addEventListener('change', () => {
-    selectedOrg = sel.value || null;
-    redraw();
-  });
+  sel.value = (counts[prev] !== undefined) ? prev : '';
+  selectedOrg = sel.value || null;
+
+  if (!sel._hasListener) {
+    sel._hasListener = true;
+    sel.addEventListener('change', () => { selectedOrg = sel.value || null; redraw(); });
+  }
 }
 
-function buildTopicDropdown() {
+function buildTopicDropdown(recs) {
+  recs = recs || occurrences;
   let sel = document.getElementById('topic-select');
+  let prev = sel.value;
   sel.innerHTML = '';
 
   let counts = {};
-  for (let rec of occurrences) {
-    if (rec.t && rec.t !== 'person' && rec.t !== 'org') {
-      counts[rec.e] = (counts[rec.e] || 0) + 1;
-    }
+  for (let rec of recs) {
+    if (rec.t && rec.t !== 'person' && rec.t !== 'org') counts[rec.e] = (counts[rec.e] || 0) + 1;
   }
 
   let noneOpt = document.createElement('option');
@@ -1395,26 +1403,43 @@ function buildTopicDropdown() {
     sel.appendChild(opt);
   }
 
-  sel.addEventListener('change', () => {
-    selectedTopic = sel.value || null;
-    redraw();
-  });
+  sel.value = (counts[prev] !== undefined) ? prev : '';
+  selectedTopic = sel.value || null;
+
+  if (!sel._hasListener) {
+    sel._hasListener = true;
+    sel.addEventListener('change', () => { selectedTopic = sel.value || null; redraw(); });
+  }
+}
+
+// Rebuild person/org/topic dropdowns scoped to the current class + role filters.
+function rebuildDependentDropdowns() {
+  let recs = occurrences;
+
+  if (selectedCIs) {
+    recs = recs.filter(r => r.ci !== undefined && selectedCIs.has(r.ci));
+  }
+
+  if (selectedRole) {
+    recs = recs.filter(r => {
+      let fileList = roundFileOrder[r.y + '-' + r.r];
+      if (!fileList || fileList.length === 0) return false;
+      let filename = fileList[Math.min(Math.floor(r.pr * fileList.length), fileList.length - 1)];
+      return fileRoleMap[r.y + '-' + r.r + '-' + filename] === selectedRole;
+    });
+  }
+
+  buildPersonDropdown(recs);
+  buildOrgDropdown(recs);
+  buildTopicDropdown(recs);
 }
 
 function buildZoomControls() {
   let controls = document.getElementById('controls');
 
-  let sep = document.createElement('span');
-  sep.style.cssText = 'width:1px; height:20px; background:#ccc; margin:0 4px;';
-  controls.appendChild(sep);
-
-  let btnStyle = 'font-size:16px; width:28px; height:28px; cursor:pointer; border:1px solid #bbb; border-radius:3px; background:#fff; font-family:monospace; line-height:1;';
-
   let zoomOut = document.createElement('button');
   zoomOut.textContent = '\u2212';
-  zoomOut.style.cssText = btnStyle;
   zoomOut.addEventListener('click', () => {
-    // Snap down to next 0.1 step
     zoomLevel = Math.max(0.1, Math.round((zoomLevel - 0.1) * 10) / 10);
     applyZoom();
   });
@@ -1422,23 +1447,35 @@ function buildZoomControls() {
 
   let zoomLabel = document.createElement('span');
   zoomLabel.id = 'zoom-label';
-  zoomLabel.style.cssText = 'font-family:monospace; font-size:11px; color:#888; min-width:40px; text-align:center; display:inline-block;';
+  zoomLabel.style.cssText = 'font-family:monospace; font-size:10px; color:var(--muted); min-width:36px; text-align:center; display:inline-block; text-transform:uppercase; letter-spacing:0.05em;';
   zoomLabel.textContent = Math.round(zoomLevel * 100) + '%';
   controls.appendChild(zoomLabel);
 
   let zoomIn = document.createElement('button');
   zoomIn.textContent = '+';
-  zoomIn.style.cssText = btnStyle;
   zoomIn.addEventListener('click', () => {
-    // Snap up to next 0.1 step
     zoomLevel = Math.min(4, Math.round((zoomLevel + 0.1) * 10) / 10);
     applyZoom();
   });
   controls.appendChild(zoomIn);
+
+  let fitBtn = document.createElement('button');
+  fitBtn.textContent = 'Fit';
+  fitBtn.addEventListener('click', fitToScreen);
+  controls.appendChild(fitBtn);
+}
+
+function fitToScreen() {
+  let container = document.getElementById('canvas-container');
+  let availW = container.clientWidth || window.innerWidth;
+  let availH = container.clientHeight || (window.innerHeight - 44);
+  zoomLevel = Math.round(Math.min(availW / canvasW, availH / canvasH) * 10) / 10;
+  zoomLevel = Math.max(0.1, Math.min(4, zoomLevel));
+  applyZoom();
 }
 
 function applyZoom() {
-document.getElementById('zoom-label').textContent = Math.round(zoomLevel * 100) + '%';
+  document.getElementById('zoom-label').textContent = Math.round(zoomLevel * 100) + '%';
   resizeCanvas(Math.round(canvasW * zoomLevel), Math.round(canvasH * zoomLevel));
   redraw();
 }
@@ -2183,13 +2220,13 @@ function draw() {
   let count = 0;
 
   for (let rec of occurrences) {
-    let isClassMatch = selectedCIs && rec.ci !== undefined && selectedCIs.has(rec.ci);
-    let isPersonMatch = selectedPerson && rec.t === 'person' && rec.e === selectedPerson;
-    let isOrgMatch = selectedOrg && rec.t === 'org' && rec.e === selectedOrg;
-    let isTopicMatch = selectedTopic && rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic;
+    // AND logic: every active filter must match this record
+    if (selectedCIs && (rec.ci === undefined || !selectedCIs.has(rec.ci))) continue;
+    if (selectedPerson && !(rec.t === 'person' && rec.e === selectedPerson)) continue;
+    if (selectedOrg && !(rec.t === 'org' && rec.e === selectedOrg)) continue;
+    if (selectedTopic && !(rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic)) continue;
 
-    let roundKey = rec.y + '-' + rec.r;
-    let fileList = roundFileOrder[roundKey];
+    let fileList = roundFileOrder[rec.y + '-' + rec.r];
     if (!fileList || fileList.length === 0) continue;
 
     let posInFiles = rec.pr * fileList.length;
@@ -2198,9 +2235,7 @@ function draw() {
     let filename = fileList[fileIdx];
 
     let branchKey = rec.y + '-' + rec.r + '-' + filename;
-    let isRoleMatch = selectedRole && fileRoleMap[branchKey] === selectedRole;
-
-    if (!isClassMatch && !isRoleMatch && !isPersonMatch && !isOrgMatch && !isTopicMatch) continue;
+    if (selectedRole && fileRoleMap[branchKey] !== selectedRole) continue;
 
     let branch = fileBranchMap[branchKey];
     if (!branch) continue;
