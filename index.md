@@ -120,23 +120,23 @@ title: Home
   <div class="print-sizes">
     <div class="print-size-item">
       <div class="print-rect-stage">
-        <div class="print-rect" style="width:53px;height:106px;"></div>
+        <div class="print-rect" style="width:106px;height:53px;"></div>
       </div>
-      <div class="print-size-num">16 &times; 32"</div>
+      <div class="print-size-num">32 &times; 16"</div>
       <div class="print-size-desc">Standard poster size. Suitable for framing.</div>
     </div>
     <div class="print-size-item">
       <div class="print-rect-stage">
-        <div class="print-rect" style="width:67px;height:134px;"></div>
+        <div class="print-rect" style="width:134px;height:67px;"></div>
       </div>
-      <div class="print-size-num">20 &times; 40"</div>
+      <div class="print-size-num">40 &times; 20"</div>
       <div class="print-size-desc">Mid-size. Good balance of detail and presence.</div>
     </div>
     <div class="print-size-item">
       <div class="print-rect-stage">
-        <div class="print-rect featured" style="width:100px;height:200px;"></div>
+        <div class="print-rect featured" style="width:200px;height:100px;"></div>
       </div>
-      <div class="print-size-num">30 &times; 60"</div>
+      <div class="print-size-num">60 &times; 30"</div>
       <div class="print-size-desc">Large-format. Full resolution at print scale &mdash; every branch and annotation visible.</div>
     </div>
   </div>

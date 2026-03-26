@@ -355,7 +355,7 @@ a:hover { color: var(--cp); }
 /* === Print mockup === */
 .print-mockup {
   margin-bottom: 40px;
-  max-width: 240px;
+  max-width: 320px;
 }
 
 .print-mockup img {
@@ -381,7 +381,7 @@ a:hover { color: var(--cp); }
 }
 
 .print-rect-stage {
-  height: 220px;
+  height: 120px;
   display: flex;
   align-items: flex-end;
 }
