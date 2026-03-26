@@ -22,6 +22,8 @@ let subclassBands = {};     // subclassBands[yearNum][className][subName] = {ySt
 let subclassColors = {};    // subclassColors[className][subName] = hex color
 let treeData = {};          // global so colorway switcher can recompute subclass colors
 let yearStats = {};         // yearStats[yr] = { files, words, orgs }
+let fileWordCount = {};     // "year-rnd-filename" → word count
+let activeResult = null;    // { branchKeys: Set, fileCount, totalWords } or null
 let questionsList = [];    // individual questions, sorted ascending by length
 let canvasW = 800;
 let canvasH = 800;
@@ -472,6 +474,7 @@ async function loadAllData() {
           rnd: rndNum,
           ci: ci,
         });
+        fileWordCount[yearNum + '-' + rndNum + '-' + fn] = wc;
       }
 
       roundFileOrder[yearNum + '-' + rndNum] = filenames;
@@ -1277,6 +1280,7 @@ function buildClassDropdown() {
       selectedCIs = new Set([parseInt(val)]);
     }
     rebuildDependentDropdowns();
+    refreshActiveResult();
     redraw();
   });
 }
@@ -1309,6 +1313,7 @@ function buildRoleDropdown() {
   sel.addEventListener('change', () => {
     selectedRole = sel.value || null;
     rebuildDependentDropdowns();
+    refreshActiveResult();
     redraw();
   });
 }
@@ -1342,7 +1347,7 @@ function buildPersonDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedPerson = sel.value || null; redraw(); });
+    sel.addEventListener('change', () => { selectedPerson = sel.value || null; refreshActiveResult(); redraw(); });
   }
 }
 
@@ -1375,7 +1380,7 @@ function buildOrgDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedOrg = sel.value || null; redraw(); });
+    sel.addEventListener('change', () => { selectedOrg = sel.value || null; refreshActiveResult(); redraw(); });
   }
 }
 
@@ -1408,7 +1413,7 @@ function buildTopicDropdown(recs) {
 
   if (!sel._hasListener) {
     sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedTopic = sel.value || null; redraw(); });
+    sel.addEventListener('change', () => { selectedTopic = sel.value || null; refreshActiveResult(); redraw(); });
   }
 }
 
@@ -1432,6 +1437,42 @@ function rebuildDependentDropdowns() {
   buildPersonDropdown(recs);
   buildOrgDropdown(recs);
   buildTopicDropdown(recs);
+}
+
+function computeActiveBranchKeys() {
+  if (!selectedCIs && !selectedRole && !selectedPerson && !selectedOrg && !selectedTopic) return null;
+
+  // One pass: track which filter conditions each branch satisfies
+  let branchConds = {};
+  for (let rec of occurrences) {
+    let fileList = roundFileOrder[rec.y + '-' + rec.r];
+    if (!fileList || fileList.length === 0) continue;
+    let fileIdx = Math.min(Math.floor(rec.pr * fileList.length), fileList.length - 1);
+    let bk = rec.y + '-' + rec.r + '-' + fileList[fileIdx];
+    if (!branchConds[bk]) branchConds[bk] = { cl: false, pe: false, or: false, to: false };
+    if (selectedCIs && rec.ci !== undefined && selectedCIs.has(rec.ci)) branchConds[bk].cl = true;
+    if (selectedPerson && rec.t === 'person' && rec.e === selectedPerson)  branchConds[bk].pe = true;
+    if (selectedOrg    && rec.t === 'org'    && rec.e === selectedOrg)     branchConds[bk].or = true;
+    if (selectedTopic  && rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic) branchConds[bk].to = true;
+  }
+
+  let branchKeys = new Set();
+  for (let [bk, conds] of Object.entries(branchConds)) {
+    if (selectedCIs    && !conds.cl)                          continue;
+    if (selectedRole   && fileRoleMap[bk] !== selectedRole)   continue;
+    if (selectedPerson && !conds.pe)                          continue;
+    if (selectedOrg    && !conds.or)                          continue;
+    if (selectedTopic  && !conds.to)                          continue;
+    branchKeys.add(bk);
+  }
+
+  let totalWords = 0;
+  for (let bk of branchKeys) totalWords += fileWordCount[bk] || 0;
+  return { branchKeys, fileCount: branchKeys.size, totalWords };
+}
+
+function refreshActiveResult() {
+  activeResult = computeActiveBranchKeys();
 }
 
 function buildZoomControls() {
@@ -2083,8 +2124,10 @@ function draw() {
 
     } else if (node.branch) {
       let b = node.branch;
-      let c = hexToRGBA(activeColorway.classes[node.sc] || activeColorway.defaultDot, 0.80);
-      ctx2.strokeStyle = c;
+      let bKey = node.year + '-' + node.rnd + '-' + node.filename;
+      let isActive = !activeResult || activeResult.branchKeys.has(bKey);
+      let alpha = isActive ? 0.80 : 0.05;
+      ctx2.strokeStyle = hexToRGBA(activeColorway.classes[node.sc] || activeColorway.defaultDot, alpha);
       ctx2.lineWidth = 1.8;
       ctx2.beginPath();
       ctx2.moveTo(b.points[0].x, b.points[0].y);
@@ -2209,39 +2252,73 @@ function draw() {
     rx = cx + estRadius + refGap;
   }
 
+  // --- Info panel (canvas-drawn, included in PNG) ---
+  if (activeResult) {
+    let panelY = ly + 20;
+    let lineH = 15;
+    let ink = activeColorway.classes[CLASS_ORDER[0]] || '#000000';
+
+    let classLabel = null;
+    if (selectedCIs) {
+      let sel = document.getElementById('class-select');
+      let opt = sel ? sel.options[sel.selectedIndex] : null;
+      if (opt) classLabel = opt.textContent.replace(/^\s*[\u25b8\u25ba]\s*/, '').replace(/\s*\u2014.*$/, '').trim();
+    }
+
+    let wTotal = activeResult.totalWords;
+    let wordsStr = wTotal >= 1e6 ? (wTotal / 1e6).toFixed(1) + 'M' :
+                   wTotal >= 1e3 ? Math.round(wTotal / 1e3) + 'K' : String(wTotal);
+
+    let infoLines = [];
+    if (classLabel)     infoLines.push('Class: ' + classLabel);
+    if (selectedRole)   infoLines.push('Role: ' + selectedRole);
+    if (selectedPerson) infoLines.push('Person: ' + selectedPerson);
+    if (selectedOrg)    infoLines.push('Org: ' + selectedOrg);
+    if (selectedTopic)  infoLines.push('Topic: ' + selectedTopic);
+    infoLines.push('Files: ' + activeResult.fileCount.toLocaleString());
+    infoLines.push('Words: ' + wordsStr);
+
+    titleCtx.font = '12px monospace';
+    titleCtx.textAlign = 'right';
+    titleCtx.textBaseline = 'top';
+    for (let line of infoLines) {
+      titleCtx.fillStyle = hexToRGBA(ink, 0.75);
+      titleCtx.fillText(line.toUpperCase(), titleRightX, panelY);
+      panelY += lineH;
+    }
+  }
+
   // Draw dots
-  let hasSelection = selectedCIs || selectedRole || selectedPerson || selectedOrg || selectedTopic;
-  if (!hasSelection) {
+  if (!activeResult) {
     document.getElementById('stats').textContent = '';
     return;
   }
 
   let ctx = drawingContext;
   let count = 0;
+  let entityFilterActive = selectedPerson || selectedOrg || selectedTopic;
 
   for (let rec of occurrences) {
-    // AND logic: every active filter must match this record
-    if (selectedCIs && (rec.ci === undefined || !selectedCIs.has(rec.ci))) continue;
-    if (selectedPerson && !(rec.t === 'person' && rec.e === selectedPerson)) continue;
-    if (selectedOrg && !(rec.t === 'org' && rec.e === selectedOrg)) continue;
-    if (selectedTopic && !(rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic)) continue;
-
     let fileList = roundFileOrder[rec.y + '-' + rec.r];
     if (!fileList || fileList.length === 0) continue;
 
     let posInFiles = rec.pr * fileList.length;
     let fileIdx = Math.min(Math.floor(posInFiles), fileList.length - 1);
     let posInFile = posInFiles - fileIdx;
-    let filename = fileList[fileIdx];
+    let branchKey = rec.y + '-' + rec.r + '-' + fileList[fileIdx];
 
-    let branchKey = rec.y + '-' + rec.r + '-' + filename;
-    if (selectedRole && fileRoleMap[branchKey] !== selectedRole) continue;
+    if (!activeResult.branchKeys.has(branchKey)) continue;
+
+    if (entityFilterActive) {
+      if (selectedPerson && !(rec.t === 'person' && rec.e === selectedPerson)) continue;
+      if (selectedOrg    && !(rec.t === 'org'    && rec.e === selectedOrg))    continue;
+      if (selectedTopic  && !(rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic)) continue;
+    }
 
     let branch = fileBranchMap[branchKey];
     if (!branch) continue;
 
     let [dotX, dotY] = getPointOnBranch(branch, posInFile);
-
     let color = ciToColor[rec.ci] || activeColorway.defaultDot;
 
     count++;
