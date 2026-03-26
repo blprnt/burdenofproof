@@ -113,32 +113,36 @@ title: Home
 
 <div class="section-block">
   <h2 class="section-title">Buy a Print</h2>
-  <p class="section-intro">The Burden of Proof visualization is available as an archival-quality poster print in three sizes. Each print ships rolled in a protective tube.</p>
-  <div class="print-mockup">
-    <img src="{{ '/assets/img/mock-poster.png' | relative_url }}" alt="Burden of Proof poster print mockup">
+  <div class="print-layout">
+    <div class="print-image">
+      <img src="{{ '/assets/img/mock-poster.png' | relative_url }}" alt="Burden of Proof poster print mockup">
+    </div>
+    <div class="print-copy">
+      <p class="print-intro">The Burden of Proof visualization is available as an archival-quality poster print in three sizes. Each print ships rolled in a protective tube.</p>
+      <div class="print-size-list">
+        <div class="print-size-row">
+          <div class="print-rect-cell">
+            <div class="print-rect" style="width:43px;height:21px;"></div>
+          </div>
+          <div class="print-size-num">32 &times; 16"</div>
+          <div class="print-size-desc">Standard poster size. Suitable for framing.</div>
+        </div>
+        <div class="print-size-row">
+          <div class="print-rect-cell">
+            <div class="print-rect" style="width:53px;height:27px;"></div>
+          </div>
+          <div class="print-size-num">40 &times; 20"</div>
+          <div class="print-size-desc">Mid-size. Good balance of detail and presence.</div>
+        </div>
+        <div class="print-size-row">
+          <div class="print-rect-cell">
+            <div class="print-rect featured" style="width:80px;height:40px;"></div>
+          </div>
+          <div class="print-size-num">60 &times; 30"</div>
+          <div class="print-size-desc">Large-format. Full resolution at print scale &mdash; every branch and annotation visible.</div>
+        </div>
+      </div>
+      <a class="print-btn-single" href="https://www.jerthorp.me/product-page/burden-of-proof-poster" target="_blank">Order a Print &rarr;</a>
+    </div>
   </div>
-  <div class="print-sizes">
-    <div class="print-size-item">
-      <div class="print-rect-stage">
-        <div class="print-rect" style="width:106px;height:53px;"></div>
-      </div>
-      <div class="print-size-num">32 &times; 16"</div>
-      <div class="print-size-desc">Standard poster size. Suitable for framing.</div>
-    </div>
-    <div class="print-size-item">
-      <div class="print-rect-stage">
-        <div class="print-rect" style="width:134px;height:67px;"></div>
-      </div>
-      <div class="print-size-num">40 &times; 20"</div>
-      <div class="print-size-desc">Mid-size. Good balance of detail and presence.</div>
-    </div>
-    <div class="print-size-item">
-      <div class="print-rect-stage">
-        <div class="print-rect featured" style="width:200px;height:100px;"></div>
-      </div>
-      <div class="print-size-num">60 &times; 30"</div>
-      <div class="print-size-desc">Large-format. Full resolution at print scale &mdash; every branch and annotation visible.</div>
-    </div>
-  </div>
-  <a class="print-btn-single" href="https://www.jerthorp.me/product-page/burden-of-proof-poster" target="_blank">Order a Print &rarr;</a>
 </div>

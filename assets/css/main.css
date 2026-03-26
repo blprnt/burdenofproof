@@ -352,38 +352,54 @@ a:hover { color: var(--cp); }
 
 .artist-text a:hover { text-decoration: underline; }
 
-/* === Print mockup === */
-.print-mockup {
-  margin-bottom: 40px;
-  max-width: 320px;
+/* === Print section === */
+.print-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 56px;
+  align-items: start;
 }
 
-.print-mockup img {
+@media (max-width: 720px) {
+  .print-layout { grid-template-columns: 1fr; }
+}
+
+.print-image img {
   display: block;
   width: 100%;
   height: auto;
   border: 1px solid var(--rule);
 }
 
-/* === Print sizes === */
-.print-sizes {
-  display: flex;
-  gap: 48px;
-  align-items: flex-end;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-
-.print-size-item {
+.print-copy {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 32px;
 }
 
-.print-rect-stage {
-  height: 120px;
+.print-intro {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.print-size-list {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+}
+
+.print-size-row {
+  display: grid;
+  grid-template-columns: 96px auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.print-rect-cell {
+  display: flex;
+  align-items: center;
 }
 
 .print-rect {
@@ -400,13 +416,13 @@ a:hover { color: var(--cp); }
   font-size: 22px;
   letter-spacing: 0.02em;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .print-size-desc {
   font-size: 11px;
   color: var(--muted);
   line-height: 1.7;
-  max-width: 140px;
 }
 
 .print-btn-single {
@@ -419,6 +435,7 @@ a:hover { color: var(--cp); }
   color: var(--ink);
   border: 1px solid var(--ink);
   padding: 8px 16px;
+  align-self: flex-start;
 }
 
 .print-btn-single:hover {
