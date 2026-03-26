@@ -114,6 +114,9 @@ title: Home
 <div class="section-block">
   <h2 class="section-title">Buy a Print</h2>
   <p class="section-intro">The Burden of Proof visualization is available as an archival-quality poster print in three sizes. Each print ships rolled in a protective tube.</p>
+  <div class="print-mockup">
+    <img src="{{ '/assets/img/mock-poster.png' | relative_url }}" alt="Burden of Proof poster print mockup">
+  </div>
   <div class="print-grid">
     <div class="print-card">
       <div class="print-size">16 &times; 32"</div>

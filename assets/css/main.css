@@ -352,6 +352,19 @@ a:hover { color: var(--cp); }
 
 .artist-text a:hover { text-decoration: underline; }
 
+/* === Print mockup === */
+.print-mockup {
+  margin-bottom: 40px;
+  max-width: 360px;
+}
+
+.print-mockup img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+
 /* === Print grid === */
 .print-grid {
   display: grid;
