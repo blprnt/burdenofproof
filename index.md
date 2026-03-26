@@ -57,6 +57,7 @@ title: Home
     <div class="content-block">
       <h3>The Data</h3>
       <p>Source documents were processed using NLP pipelines to extract named entities&mdash;organizations, individuals, and the exemption classes they address&mdash;making it possible to track which stakeholders appear across multiple proceedings and how the structure of the argument has evolved over twenty-five years.</p>
+      <p><a href="https://github.com/blprnt/burdenofproof" target="_blank">View the data and source on GitHub &rarr;</a></p>
     </div>
   </div>
 
