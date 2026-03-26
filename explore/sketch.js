@@ -1574,6 +1574,68 @@ function buildZoomControls() {
   fitBtn.textContent = 'Fit';
   fitBtn.addEventListener('click', fitToScreen);
   controls.appendChild(fitBtn);
+
+  setupInteractionListeners();
+}
+
+function setupInteractionListeners() {
+  let container = document.getElementById('canvas-container');
+  if (!container) return;
+
+  // Double-click: zoom in 25%, centered on cursor position
+  container.addEventListener('dblclick', (e) => {
+    let rect = container.getBoundingClientRect();
+    let clickX = e.clientX - rect.left;
+    let clickY = e.clientY - rect.top;
+    let fracX = (container.scrollLeft + clickX) / (canvasW * zoomLevel);
+    let fracY = (container.scrollTop  + clickY) / (canvasH * zoomLevel);
+    zoomLevel = Math.min(4, Math.round((zoomLevel + 0.25) * 100) / 100);
+    applyZoom();
+    container.scrollLeft = fracX * canvasW * zoomLevel - clickX;
+    container.scrollTop  = fracY * canvasH * zoomLevel - clickY;
+  });
+
+  // Pinch-to-zoom (mobile)
+  let pinchStartDist = null;
+  let pinchStartZoom = null;
+  let pinchMidX = 0;
+  let pinchMidY = 0;
+
+  function pinchDist(touches) {
+    let dx = touches[0].clientX - touches[1].clientX;
+    let dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      pinchStartDist = pinchDist(e.touches);
+      pinchStartZoom = zoomLevel;
+      let rect = container.getBoundingClientRect();
+      pinchMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+      pinchMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && pinchStartDist !== null) {
+      e.preventDefault();
+      let fracX = (container.scrollLeft + pinchMidX) / (canvasW * zoomLevel);
+      let fracY = (container.scrollTop  + pinchMidY) / (canvasH * zoomLevel);
+      zoomLevel = Math.max(0.1, Math.min(4, pinchStartZoom * pinchDist(e.touches) / pinchStartDist));
+      applyZoom();
+      container.scrollLeft = fracX * canvasW * zoomLevel - pinchMidX;
+      container.scrollTop  = fracY * canvasH * zoomLevel - pinchMidY;
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchend', () => {
+    if (pinchStartDist !== null) {
+      pinchStartDist = null;
+      pinchStartZoom = null;
+    }
+  });
 }
 
 function fitToScreen() {
