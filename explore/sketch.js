@@ -2324,9 +2324,12 @@ function draw() {
 
   // --- Info panel (canvas-drawn, included in PNG) ---
   if (activeResult) {
-    let panelY = ly + 20;
-    let lineH = 15;
-    let ink = activeColorway.classes[CLASS_ORDER[0]] || '#000000';
+    let ink    = activeColorway.classes[CLASS_ORDER[0]] || '#000000';
+    let valFs  = Math.round(titleFontSize * 0.60);
+    let lblFs  = Math.round(valFs * 0.42);
+    let valCapH = Math.round(valFs * 0.72);
+    let pairGap = Math.round(valFs * 0.25);
+    let panelY  = ly + 32;
 
     let classLabel = null;
     if (selectedCIs) {
@@ -2339,22 +2342,30 @@ function draw() {
     let wordsStr = wTotal >= 1e6 ? (wTotal / 1e6).toFixed(1) + 'M' :
                    wTotal >= 1e3 ? Math.round(wTotal / 1e3) + 'K' : String(wTotal);
 
-    let infoLines = [];
-    if (classLabel)     infoLines.push('Class: ' + classLabel);
-    if (selectedRole)   infoLines.push('Role: ' + selectedRole);
-    if (selectedPerson) infoLines.push('Person: ' + selectedPerson);
-    if (selectedOrg)    infoLines.push('Org: ' + selectedOrg);
-    if (selectedTopic)  infoLines.push('Topic: ' + selectedTopic);
-    infoLines.push('Files: ' + activeResult.fileCount.toLocaleString());
-    infoLines.push('Words: ' + wordsStr);
+    let pairs = [];
+    if (classLabel)     pairs.push({ label: 'Class',  val: classLabel });
+    if (selectedRole)   pairs.push({ label: 'Role',   val: selectedRole });
+    if (selectedPerson) pairs.push({ label: 'Person', val: selectedPerson });
+    if (selectedOrg)    pairs.push({ label: 'Org',    val: selectedOrg });
+    if (selectedTopic)  pairs.push({ label: 'Topic',  val: selectedTopic });
+    pairs.push({ label: 'Files', val: activeResult.fileCount.toLocaleString() });
+    pairs.push({ label: 'Words', val: wordsStr });
 
-    titleCtx.font = '12px monospace';
-    titleCtx.textAlign = 'right';
+    titleCtx.textAlign    = 'right';
     titleCtx.textBaseline = 'top';
-    for (let line of infoLines) {
-      titleCtx.fillStyle = hexToRGBA(ink, 0.75);
-      titleCtx.fillText(line.toUpperCase(), titleRightX, panelY);
-      panelY += lineH;
+
+    for (let { label, val } of pairs) {
+      // Key name: Bebas Neue small, dark
+      titleCtx.font      = `${lblFs}px "Bebas Neue", Georgia, serif`;
+      titleCtx.fillStyle = hexToRGBA(ink, 0.55);
+      titleCtx.fillText(label.toUpperCase(), titleRightX, panelY);
+      panelY += Math.round(lblFs * 0.88);
+
+      // Value: Bebas Neue large, lighter
+      titleCtx.font      = `${valFs}px "Bebas Neue", Georgia, serif`;
+      titleCtx.fillStyle = hexToRGBA(ink, 0.30);
+      titleCtx.fillText(val, titleRightX, panelY);
+      panelY += valCapH + pairGap;
     }
   }
 
