@@ -390,11 +390,30 @@ a:hover { color: var(--cp); }
 
 .print-size-row {
   display: grid;
-  grid-template-columns: 96px auto 1fr;
+  grid-template-columns: 96px auto 1fr auto;
   align-items: center;
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid var(--rule);
+}
+
+.print-price {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.print-shipping {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  display: block;
+  margin-top: 3px;
 }
 
 .print-rect-cell {

@@ -126,6 +126,7 @@ title: Home
           </div>
           <div class="print-size-num">32 &times; 16"</div>
           <div class="print-size-desc">Standard poster size. Suitable for framing.</div>
+          <div class="print-price">$20 <span class="print-shipping">+ shipping</span></div>
         </div>
         <div class="print-size-row">
           <div class="print-rect-cell">
@@ -133,6 +134,7 @@ title: Home
           </div>
           <div class="print-size-num">40 &times; 20"</div>
           <div class="print-size-desc">Mid-size. Good balance of detail and presence.</div>
+          <div class="print-price">$30 <span class="print-shipping">+ shipping</span></div>
         </div>
         <div class="print-size-row">
           <div class="print-rect-cell">
@@ -140,6 +142,7 @@ title: Home
           </div>
           <div class="print-size-num">60 &times; 30"</div>
           <div class="print-size-desc">Large-format. Full resolution at print scale &mdash; every branch and annotation visible.</div>
+          <div class="print-price">$50 <span class="print-shipping">+ shipping</span></div>
         </div>
       </div>
       <a class="print-btn-single" href="https://www.jerthorp.me/product-page/burden-of-proof-poster" target="_blank">Order a Print &rarr;</a>
