@@ -1575,6 +1575,14 @@ function buildZoomControls() {
   fitBtn.addEventListener('click', fitToScreen);
   controls.appendChild(fitBtn);
 
+  if (new URLSearchParams(window.location.search).get('admin') === '1') {
+    let hiresBtn = document.createElement('button');
+    hiresBtn.textContent = 'Export Hi-Res (18k)';
+    hiresBtn.style.cssText = 'border-color:var(--cp); color:var(--cp);';
+    hiresBtn.addEventListener('click', saveHiRes);
+    controls.appendChild(hiresBtn);
+  }
+
   setupInteractionListeners();
 }
 
@@ -2473,6 +2481,26 @@ function draw() {
 }
 
 
+
+function saveHiRes() {
+  let savedZoom = zoomLevel;
+  zoomLevel = 18000 / canvasW;
+  resizeCanvas(18000, 9000);
+  redraw();
+
+  let canvas = document.querySelector('canvas');
+  let now = new Date();
+  let ts = now.toISOString().slice(0, 19).replace('T', '_').replace(/:/g, '');
+  let link = document.createElement('a');
+  link.download = '1201-corpus-hires-' + ts + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+
+  zoomLevel = savedZoom;
+  resizeCanvas(Math.round(canvasW * savedZoom), Math.round(canvasH * savedZoom));
+  redraw();
+}
+window.saveHiRes = saveHiRes;
 
 function savePlot() {
   let savedZoom = zoomLevel;
