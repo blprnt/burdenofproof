@@ -5,7 +5,7 @@ title: Home
 <div class="hero">
   <p class="hero-eyebrow"><a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C. § 1201(a)(1)</a> &mdash; DMCA Section 1201 Rulemaking</p>
   <h1>Burden<br>of Proof</h1>
-  <p class="hero-desc">A text analysis and visualization of the public record from nine triennial rulemaking proceedings under <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a> &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000.</p>
+  <p class="hero-desc">A text analysis and visualization of the public record from nine triennial rulemaking proceedings under <a href="https://www.copyright.gov/1201/" target="_blank">17 U.S.C.&nbsp;&sect;&nbsp;1201(a)(1)</a> &mdash; mapping more than 55,000 pages of petitions, comments, and reply comments filed by scores of organizations, law school clinics, trade associations, academics, and individuals since 2000. This work is a companion to <a href="https://www.nyuengelberg.org/outputs/unbalanced-interests/" target="_blank">Unbalanced Interests</a>, a report on the proceeding and how the provision is used by rightsholders.</p>
 </div>
 
 <div class="viz-block">
