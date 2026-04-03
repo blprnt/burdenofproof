@@ -1248,7 +1248,7 @@ function buildClassDropdown() {
 
   let noneOpt = document.createElement('option');
   noneOpt.value = '-1';
-  noneOpt.textContent = '\u2014 Select a class \u2014';
+  noneOpt.textContent = '\u2014 Filter by class \u2014';
   sel.appendChild(noneOpt);
 
   // Use CLASS_ORDER for dropdown grouping
@@ -1331,7 +1331,7 @@ function buildAuthorDropdown() {
 
   let noneOpt = document.createElement('option');
   noneOpt.value = '';
-  noneOpt.textContent = '\u2014 Select an author \u2014';
+  noneOpt.textContent = '\u2014 Filter by author \u2014';
   sel.appendChild(noneOpt);
 
   let names = Object.keys(authorBranchKeys).sort((a, b) => a.localeCompare(b));
