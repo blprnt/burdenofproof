@@ -6,6 +6,7 @@ let loaded = false;
 // Selection state
 let selectedCIs = null;     // null = nothing, Set of ci values
 let selectedRole = null;    // null = nothing, 'Proponent' | 'Opponent'
+let selectedAuthor = null;  // null = nothing, string author name
 let selectedPerson = null;  // null = nothing, string entity name
 let selectedOrg = null;     // null = nothing, string entity name
 let selectedTopic = null;   // null = nothing, string entity name
@@ -23,6 +24,7 @@ let subclassColors = {};    // subclassColors[className][subName] = hex color
 let treeData = {};          // global so colorway switcher can recompute subclass colors
 let yearStats = {};         // yearStats[yr] = { files, words, orgs }
 let fileWordCount = {};     // "year-rnd-filename" → word count
+let authorBranchKeys = {}; // authorName → [branch key strings]
 let activeResult = null;    // { branchKeys: Set, fileCount, totalWords } or null
 let questionsList = [];    // individual questions, sorted ascending by length
 let canvasW = 800;
@@ -338,17 +340,19 @@ const OCC_FILES = [
 ];
 
 async function loadAllData() {
-  let [classResp, csvResp, wcResp, qResp, ...occResps] = await Promise.all([
+  let [classResp, csvResp, wcResp, qResp, authorResp, ...occResps] = await Promise.all([
     fetch('data/entity_classes.json'),
     fetch('data/file_class_map.csv'),
     fetch('data/hierarchical_word_counts.json'),
     fetch('data/questions_by_length.txt'),
+    fetch('data/author_branch_keys.json'),
     ...OCC_FILES.map(f => fetch(f)),
   ]);
 
   classData = await classResp.json();
   let csvText = await csvResp.text();
   let wcJson = await wcResp.json();
+  authorBranchKeys = await authorResp.json();
   let occTexts = await Promise.all(occResps.map(r => r.text()));
   let occText = occTexts.join('\n');
 
@@ -518,6 +522,7 @@ async function loadAllData() {
   // Build UI
   buildClassDropdown();
   buildRoleDropdown();
+  buildAuthorDropdown();
   buildPersonDropdown();
   buildOrgDropdown();
   buildTopicDropdown();
@@ -1321,6 +1326,36 @@ function buildRoleDropdown() {
   });
 }
 
+function buildAuthorDropdown() {
+  let sel = document.getElementById('author-select');
+  if (!sel) return;
+  sel.innerHTML = '';
+
+  let noneOpt = document.createElement('option');
+  noneOpt.value = '';
+  noneOpt.textContent = '\u2014 Select an author \u2014';
+  sel.appendChild(noneOpt);
+
+  let names = Object.keys(authorBranchKeys).sort((a, b) => a.localeCompare(b));
+  for (let name of names) {
+    let opt = document.createElement('option');
+    opt.value = name;
+    let count = authorBranchKeys[name].length;
+    opt.textContent = name + ' (' + count + ')';
+    sel.appendChild(opt);
+  }
+
+  if (!sel._hasListener) {
+    sel._hasListener = true;
+    sel.addEventListener('change', () => {
+      selectedAuthor = sel.value || null;
+      refreshActiveResult();
+      updateURL();
+      redraw();
+    });
+  }
+}
+
 function buildPersonDropdown(recs) {
   recs = recs || occurrences;
   let sel = document.getElementById('person-select');
@@ -1443,7 +1478,18 @@ function rebuildDependentDropdowns() {
 }
 
 function computeActiveBranchKeys() {
-  if (!selectedCIs && !selectedRole && !selectedPerson && !selectedOrg && !selectedTopic) return null;
+  const anyFilter = selectedCIs || selectedRole || selectedAuthor || selectedPerson || selectedOrg || selectedTopic;
+  if (!anyFilter) return null;
+
+  // Author-only shortcut: return precomputed keys directly
+  if (selectedAuthor && !selectedCIs && !selectedRole && !selectedPerson && !selectedOrg && !selectedTopic) {
+    let branchKeys = new Set(authorBranchKeys[selectedAuthor] || []);
+    let totalWords = 0;
+    for (let bk of branchKeys) totalWords += fileWordCount[bk] || 0;
+    return { branchKeys, fileCount: branchKeys.size, totalWords };
+  }
+
+  let authorKeys = selectedAuthor ? new Set(authorBranchKeys[selectedAuthor] || []) : null;
 
   // One pass: track which filter conditions each branch satisfies
   let branchConds = {};
@@ -1466,6 +1512,7 @@ function computeActiveBranchKeys() {
     if (selectedPerson && !conds.pe)                          continue;
     if (selectedOrg    && !conds.or)                          continue;
     if (selectedTopic  && !conds.to)                          continue;
+    if (authorKeys     && !authorKeys.has(bk))                continue;
     branchKeys.add(bk);
   }
 
@@ -1487,6 +1534,7 @@ function updateURL() {
   let classSel = document.getElementById('class-select');
   if (classSel && classSel.value !== '-1') params.set('class', classSel.value);
   if (selectedRole)   params.set('role',   selectedRole);
+  if (selectedAuthor) params.set('author', selectedAuthor);
   if (selectedPerson) params.set('person', selectedPerson);
   if (selectedOrg)    params.set('org',    selectedOrg);
   if (selectedTopic)  params.set('topic',  selectedTopic);
@@ -1521,6 +1569,12 @@ function applyURLParams() {
   if (roleVal) {
     let sel = document.getElementById('role-select');
     if (sel) { sel.value = roleVal; selectedRole = roleVal; }
+  }
+
+  let authorVal = params.get('author');
+  if (authorVal) {
+    let sel = document.getElementById('author-select');
+    if (sel) { sel.value = authorVal; selectedAuthor = authorVal; }
   }
 
   let personVal = params.get('person');
@@ -2411,11 +2465,12 @@ function draw() {
                    wTotal >= 1e3 ? Math.round(wTotal / 1e3) + 'K' : String(wTotal);
 
     let pairs = [];
-    if (classLabel)     pairs.push({ label: 'Class',  val: classLabel });
-    if (selectedRole)   pairs.push({ label: 'Role',   val: selectedRole });
-    if (selectedPerson) pairs.push({ label: 'Person', val: selectedPerson });
-    if (selectedOrg)    pairs.push({ label: 'Org',    val: selectedOrg });
-    if (selectedTopic)  pairs.push({ label: 'Topic',  val: selectedTopic });
+    if (classLabel)      pairs.push({ label: 'Class',  val: classLabel });
+    if (selectedRole)    pairs.push({ label: 'Role',   val: selectedRole });
+    if (selectedAuthor)  pairs.push({ label: 'Author', val: selectedAuthor });
+    if (selectedPerson)  pairs.push({ label: 'Person', val: selectedPerson });
+    if (selectedOrg)     pairs.push({ label: 'Org',    val: selectedOrg });
+    if (selectedTopic)   pairs.push({ label: 'Topic',  val: selectedTopic });
     pairs.push({ label: 'Files', val: activeResult.fileCount.toLocaleString() });
     pairs.push({ label: 'Words', val: wordsStr });
 

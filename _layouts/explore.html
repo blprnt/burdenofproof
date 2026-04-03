@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-  <script src="{{ '/explore/sketch.js' | relative_url }}?v=115"></script>
+  <script src="{{ '/explore/sketch.js' | relative_url }}?v=116"></script>
   <style>
     :root {
       --bg:     #F4F0E2;
@@ -70,6 +70,23 @@
     }
 
     .site-back:hover { color: var(--cp); }
+
+    .controls-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--rule);
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
+
+    .controls-section-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
     select {
       background: transparent;
@@ -152,9 +169,12 @@
     <a class="site-back" href="{{ '/' | relative_url }}">Burden of Proof</a>
     <select id="class-select"><option value="-1">Loading...</option></select>
     <select id="role-select"><option value="">Loading...</option></select>
+    <select id="author-select"><option value="">All Authors</option></select>
+    <select id="topic-select"><option value="">Loading...</option></select>
+    <div class="controls-divider"></div>
+    <span class="controls-section-label">Labeled Entities</span>
     <select id="person-select"><option value="">Loading...</option></select>
     <select id="org-select"><option value="">Loading...</option></select>
-    <select id="topic-select"><option value="">Loading...</option></select>
     <span id="stats"></span>
     <button onclick="savePlot()">Save PNG</button>
   </div>
