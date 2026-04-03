@@ -1566,7 +1566,7 @@ function applyURLParams() {
 }
 
 function buildZoomControls() {
-  let controls = document.getElementById('controls');
+  let controls = document.getElementById('controls-main') || document.getElementById('controls');
 
   let zoomOut = document.createElement('button');
   zoomOut.textContent = '\u2212';
