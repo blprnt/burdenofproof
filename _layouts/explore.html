@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-  <script src="{{ '/explore/sketch.js' | relative_url }}?v=116"></script>
+  <script src="{{ '/explore/sketch.js' | relative_url }}?v=117"></script>
   <style>
     :root {
       --bg:     #F4F0E2;
@@ -44,12 +44,23 @@
       z-index: 10;
       flex-shrink: 0;
       background: var(--bg);
-      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .controls-row {
       display: flex;
       gap: 8px;
       align-items: center;
       flex-wrap: wrap;
-      border-bottom: 1px solid var(--rule);
+      padding: 8px 16px;
+    }
+
+    .controls-row-entities {
+      background: rgba(80, 52, 20, 0.05);
+      border-top: 1px solid var(--rule);
+      padding: 6px 16px;
     }
 
     #canvas-container {
@@ -70,14 +81,6 @@
     }
 
     .site-back:hover { color: var(--cp); }
-
-    .controls-divider {
-      width: 1px;
-      height: 24px;
-      background: var(--rule);
-      flex-shrink: 0;
-      margin: 0 4px;
-    }
 
     .controls-section-label {
       font-size: 9px;
@@ -166,17 +169,19 @@
 </head>
 <body>
   <div id="controls">
-    <a class="site-back" href="{{ '/' | relative_url }}">Burden of Proof</a>
-    <select id="class-select"><option value="-1">Loading...</option></select>
-    <select id="role-select"><option value="">Loading...</option></select>
-    <select id="author-select"><option value="">All Authors</option></select>
-    <select id="topic-select"><option value="">Loading...</option></select>
-    <div class="controls-divider"></div>
-    <span class="controls-section-label">Labeled Entities</span>
-    <select id="person-select"><option value="">Loading...</option></select>
-    <select id="org-select"><option value="">Loading...</option></select>
-    <span id="stats"></span>
-    <button onclick="savePlot()">Save PNG</button>
+    <div class="controls-row">
+      <a class="site-back" href="{{ '/' | relative_url }}">Burden of Proof</a>
+      <select id="class-select"><option value="-1">Loading...</option></select>
+      <select id="role-select"><option value="">Loading...</option></select>
+      <select id="author-select"><option value="">All Authors</option></select>
+      <span id="stats"></span>
+      <button onclick="savePlot()">Save PNG</button>
+    </div>
+    <div class="controls-row controls-row-entities">
+      <span class="controls-section-label">Labeled Entities</span>
+      <select id="person-select"><option value="">Loading...</option></select>
+      <select id="org-select"><option value="">Loading...</option></select>
+    </div>
   </div>
   <div id="canvas-container"></div>
   <div id="legend"></div>

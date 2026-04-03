@@ -9,7 +9,6 @@ let selectedRole = null;    // null = nothing, 'Proponent' | 'Opponent'
 let selectedAuthor = null;  // null = nothing, string author name
 let selectedPerson = null;  // null = nothing, string entity name
 let selectedOrg = null;     // null = nothing, string entity name
-let selectedTopic = null;   // null = nothing, string entity name
 
 // Built during layout
 let treeNodes = [];         // flat list of entries with screen positions
@@ -525,7 +524,6 @@ async function loadAllData() {
   buildAuthorDropdown();
   buildPersonDropdown();
   buildOrgDropdown();
-  buildTopicDropdown();
   // Default zoom: fit horizontally to window
   zoomLevel = Math.min(1, windowWidth / canvasW);
   buildZoomControls();
@@ -1349,6 +1347,7 @@ function buildAuthorDropdown() {
     sel._hasListener = true;
     sel.addEventListener('change', () => {
       selectedAuthor = sel.value || null;
+      rebuildDependentDropdowns();
       refreshActiveResult();
       updateURL();
       redraw();
@@ -1422,40 +1421,7 @@ function buildOrgDropdown(recs) {
   }
 }
 
-function buildTopicDropdown(recs) {
-  recs = recs || occurrences;
-  let sel = document.getElementById('topic-select');
-  let prev = sel.value;
-  sel.innerHTML = '';
-
-  let counts = {};
-  for (let rec of recs) {
-    if (rec.t && rec.t !== 'person' && rec.t !== 'org') counts[rec.e] = (counts[rec.e] || 0) + 1;
-  }
-
-  let noneOpt = document.createElement('option');
-  noneOpt.value = '';
-  noneOpt.textContent = '\u2014 Select a topic \u2014';
-  sel.appendChild(noneOpt);
-
-  let sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  for (let [name, cnt] of sorted) {
-    let opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = name + ' (' + cnt.toLocaleString() + ')';
-    sel.appendChild(opt);
-  }
-
-  sel.value = (counts[prev] !== undefined) ? prev : '';
-  selectedTopic = sel.value || null;
-
-  if (!sel._hasListener) {
-    sel._hasListener = true;
-    sel.addEventListener('change', () => { selectedTopic = sel.value || null; refreshActiveResult(); updateURL(); redraw(); });
-  }
-}
-
-// Rebuild person/org/topic dropdowns scoped to the current class + role filters.
+// Rebuild person/org dropdowns scoped to the current class + role + author filters.
 function rebuildDependentDropdowns() {
   let recs = occurrences;
 
@@ -1472,17 +1438,26 @@ function rebuildDependentDropdowns() {
     });
   }
 
+  if (selectedAuthor) {
+    let authorKeys = new Set(authorBranchKeys[selectedAuthor] || []);
+    recs = recs.filter(r => {
+      let fileList = roundFileOrder[r.y + '-' + r.r];
+      if (!fileList || fileList.length === 0) return false;
+      let filename = fileList[Math.min(Math.floor(r.pr * fileList.length), fileList.length - 1)];
+      return authorKeys.has(r.y + '-' + r.r + '-' + filename);
+    });
+  }
+
   buildPersonDropdown(recs);
   buildOrgDropdown(recs);
-  buildTopicDropdown(recs);
 }
 
 function computeActiveBranchKeys() {
-  const anyFilter = selectedCIs || selectedRole || selectedAuthor || selectedPerson || selectedOrg || selectedTopic;
+  const anyFilter = selectedCIs || selectedRole || selectedAuthor || selectedPerson || selectedOrg;
   if (!anyFilter) return null;
 
   // Author-only shortcut: return precomputed keys directly
-  if (selectedAuthor && !selectedCIs && !selectedRole && !selectedPerson && !selectedOrg && !selectedTopic) {
+  if (selectedAuthor && !selectedCIs && !selectedRole && !selectedPerson && !selectedOrg) {
     let branchKeys = new Set(authorBranchKeys[selectedAuthor] || []);
     let totalWords = 0;
     for (let bk of branchKeys) totalWords += fileWordCount[bk] || 0;
@@ -1502,7 +1477,6 @@ function computeActiveBranchKeys() {
     if (selectedCIs && rec.ci !== undefined && selectedCIs.has(rec.ci)) branchConds[bk].cl = true;
     if (selectedPerson && rec.t === 'person' && rec.e === selectedPerson)  branchConds[bk].pe = true;
     if (selectedOrg    && rec.t === 'org'    && rec.e === selectedOrg)     branchConds[bk].or = true;
-    if (selectedTopic  && rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic) branchConds[bk].to = true;
   }
 
   let branchKeys = new Set();
@@ -1511,7 +1485,6 @@ function computeActiveBranchKeys() {
     if (selectedRole   && fileRoleMap[bk] !== selectedRole)   continue;
     if (selectedPerson && !conds.pe)                          continue;
     if (selectedOrg    && !conds.or)                          continue;
-    if (selectedTopic  && !conds.to)                          continue;
     if (authorKeys     && !authorKeys.has(bk))                continue;
     branchKeys.add(bk);
   }
@@ -1537,7 +1510,6 @@ function updateURL() {
   if (selectedAuthor) params.set('author', selectedAuthor);
   if (selectedPerson) params.set('person', selectedPerson);
   if (selectedOrg)    params.set('org',    selectedOrg);
-  if (selectedTopic)  params.set('topic',  selectedTopic);
 
   let qs = params.toString();
   window.history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
@@ -1587,12 +1559,6 @@ function applyURLParams() {
   if (orgVal) {
     let sel = document.getElementById('org-select');
     if (sel) { sel.value = orgVal; selectedOrg = orgVal; }
-  }
-
-  let topicVal = params.get('topic');
-  if (topicVal) {
-    let sel = document.getElementById('topic-select');
-    if (sel) { sel.value = topicVal; selectedTopic = topicVal; }
   }
 
   refreshActiveResult();
@@ -2470,7 +2436,6 @@ function draw() {
     if (selectedAuthor)  pairs.push({ label: 'Author', val: selectedAuthor });
     if (selectedPerson)  pairs.push({ label: 'Person', val: selectedPerson });
     if (selectedOrg)     pairs.push({ label: 'Org',    val: selectedOrg });
-    if (selectedTopic)   pairs.push({ label: 'Topic',  val: selectedTopic });
     pairs.push({ label: 'Files', val: activeResult.fileCount.toLocaleString() });
     pairs.push({ label: 'Words', val: wordsStr });
 
@@ -2500,7 +2465,7 @@ function draw() {
 
   let ctx = drawingContext;
   let count = 0;
-  let entityFilterActive = selectedPerson || selectedOrg || selectedTopic;
+  let entityFilterActive = selectedPerson || selectedOrg;
 
   for (let rec of occurrences) {
     let fileList = roundFileOrder[rec.y + '-' + rec.r];
@@ -2516,7 +2481,6 @@ function draw() {
     if (entityFilterActive) {
       if (selectedPerson && !(rec.t === 'person' && rec.e === selectedPerson)) continue;
       if (selectedOrg    && !(rec.t === 'org'    && rec.e === selectedOrg))    continue;
-      if (selectedTopic  && !(rec.t !== 'person' && rec.t !== 'org' && rec.e === selectedTopic)) continue;
     }
 
     let branch = fileBranchMap[branchKey];
